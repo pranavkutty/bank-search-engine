@@ -5,6 +5,41 @@ const pool = require("./db")
 
 
 //autocomplete api
+app.get("/api/branches/autocomplete", async (req, res) => {
+    try {
+
+        //default limit and offset
+        let offset = 0, limit = 10;
+        let searchText = '';
+        if (req.query.offset) {
+            offset = req.query.offset;
+        }
+        if (req.query.limit) {
+            limit = req.query.limit;
+        }
+        if (req.query.q) {
+            searchText = req.query.q;
+        }
+        else {
+            res.status(400).json({
+                "error": "Missing query 'q' in the query parameters"
+            });
+        }
+
+        offset = limit * offset; //converting offset to postgres offset
+
+        const matches = await pool.query(
+            "SELECT * from branches WHERE branch ILIKE $1 ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+            [searchText + "%", limit, offset]
+        );
+        res.json({ "branches": matches["rows"] });
+    }
+    catch (err) {
+        res.send(err.message);
+    }
+});
+
+// search api
 app.get("/api/branches", async (req, res) => {
     try {
         //default limit and offset
@@ -24,22 +59,27 @@ app.get("/api/branches", async (req, res) => {
                 "error": "Missing query 'q' in the query parameters"
             });
         }
-        offset = limit * offset;
-        // const regex = new RegExp(`^${searchText}`, 'gi');
 
-        const matches = await pool.query(
-            "SELECT * from branches WHERE branch ILIKE $1 ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
-            [searchText + "%", limit, offset]
-        );
-        res.json({ "branches": matches["rows"] });
+        offset = limit * offset; //converting offset to postgres offset
+
+        let matches = await pool.query(
+            "SELECT * from branches WHERE UPPER($1) IN (ifsc,branch,address,city,district,state) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+            [searchText, limit, offset]
+        )
+        data = matches["rows"];
+        // console.log(typeof (data));
+        // if (typeof BigInt(searchText) === 'bigint') {
+        //     matches = await pool.query(
+        //         "SELECT * from branches WHERE bank_id::varchar(255) LIKE $1 ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+        //         ['110', limit, offset]
+        //     )
+        // }
+        res.json({ "branches": data });
     }
     catch (err) {
-        res.send(err.message);
+        res.send(err);
     }
 });
-
-// search api
-
 
 
 app.listen(3000, () => {

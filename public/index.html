@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Search Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Bank Search Engine</h1>
+    </header>
+    <div id="main-container">
+        <input type="text" id="searchbar" placeholder="Enter text to start searching...">
+        <div id="results-container"></div>
+        <div id="page-control">
+            <div id="buttons">
+                <button id="prev">❮ Prev</button>
+                <button id="next">Next ❯</button>
+            </div>
+            <!-- <input list="page-limit" type="number" min="1"> -->
+            <select id="page-limit">
+                <option value="2">2</option>
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
