@@ -1,7 +1,10 @@
 
 const express = require("express");
 const app = express();
-const pool = require("./db")
+var cors = require('cors')
+app.use(cors())
+const pool = require("./db");
+app.use(express.static('public'));
 
 
 //autocomplete api
@@ -61,10 +64,9 @@ app.get("/api/branches", async (req, res) => {
         }
 
         offset = limit * offset; //converting offset to postgres offset
-
         let matches = await pool.query(
-            "SELECT * from branches WHERE UPPER($1) IN (ifsc,branch,address,city,district,state) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
-            [searchText, limit, offset]
+            "SELECT * FROM branches WHERE ifsc ILIKE $1 OR branch ILIKE $1 OR address ILIKE $1 OR city ILIKE $1 OR district ILIKE $1 OR state ILIKE $1 ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+            ["%" + searchText + "%", limit, offset]
         )
         data = matches["rows"];
         // console.log(typeof (data));

@@ -14,28 +14,63 @@
     <header>
         <h1>Bank Search Engine</h1>
     </header>
+
     <div id="main-container">
-        <input type="text" id="searchbar" placeholder="Enter text to start searching...">
-        <div id="results-container"></div>
+        <div id="search">
+            <select id="select-city">
+                <option value="Bangalore">Bangalore</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Surat">Surat</option>
+                <option value="Delhi">Delhi</option>
+            </select><input type="text" id="search-bar" placeholder="Enter text to start searching...">
+        </div>
+        <hr id="top" align="center">
+        <div id="results-container">
+            <table id="results">
+                <tr class="table-heading">
+                    <th>IFSC</th>
+                    <th>Branch</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th colspan="2">State</th>
+                </tr>
+                <tr>
+                    <td>ABNA0100318</td>
+                    <td>BANGALORE</td>
+                    <td>PRESTIGE TOWERS', GROUND FLOOR, 99 & 100, RESIDENCY ROAD, BANGALORE 560 025.</td>
+                    <td>BANGALORE</td>
+                    <td>KARNATAKA</td>
+                    <td><img src="images/unfav.png" alt="fav-icon"></td>
+                </tr>
+            </table>
+            <h2>No records found..</h2>
+        </div>
         <div id="page-control">
             <div id="buttons">
-                <button id="prev">❮ Prev</button>
-                <button id="next">Next ❯</button>
+                <button id="prev">❮ Prev</button><button id="next">Next ❯</button>
             </div>
-            <!-- <input list="page-limit" type="number" min="1"> -->
-            <select id="page-limit">
-                <option value="2">2</option>
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
+            <div id="limit">
+                <select id="page-limit">
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
         </div>
     </div>
     <footer>
-
+        <p>Made by Pranav</a></p>
+        <div id="contact">
+            <a href="https://github.com/pranavkutty" target="_blank">Github </a>&bull; <a
+                href="https://www.linkedin.com/in/pranavkutty" target="_blank">Linkedin</a>
+        </div>
+        <p id="disclaimer">The author reserves the right not to be responsible for the topicality, correctness,
+            completeness or quality of the information provided.</p>
     </footer>
-</body>
 
 </html>
