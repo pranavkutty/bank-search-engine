@@ -69,9 +69,13 @@ hr#top{
 
 #results-container{
     min-height: 50vh;
+    max-width: 85%;
+    margin: auto;
+    overflow-x:auto;
 }
 
 #results{
+    table-layout: fixed;
     margin-top: 3vh;
     border-collapse: separate;
     border-spacing: 0 1vh;
@@ -79,7 +83,10 @@ hr#top{
     align-self: center;
     margin-left: auto;
     margin-right: auto;
+    display: none;
+    padding-bottom: 30vh;
 }
+
 
 #results tr{
     background-color: #aad8d3;
@@ -114,11 +121,13 @@ th{
 }
 
 td{
+    font-size: 2vmin;
     padding-left: 2vw;
-    padding-right: 2vw;
+    padding-right: 1.5vmin;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }
-#results-container h2{
-    display: none;
+#no-table{
     margin-top: 20vh;
     text-align: center;
 }
@@ -141,8 +150,8 @@ td{
 }
 
 #buttons button{
-    width: 80px;
-    height: 40px;
+    width: 8vmin;
+    height: 5vmin;
     font-size: 2.3vmin;
     border: 0px solid #027379;
     border-radius: 5px;
@@ -158,7 +167,8 @@ td{
     flex:2;
 }
 #page-limit{
-    height: 40px;
+    height: 5vmin;
+    width: 8vmin;
     font-size: 2.3vmin;
     border: 0px solid black;
     border-radius: 5px;
@@ -178,6 +188,7 @@ footer{
     text-align: center;
     line-height: 4vh;
     padding: 2vh;
+    margin-top: auto;
 }
 
 footer p{
