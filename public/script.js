@@ -66,10 +66,12 @@ const searchQuery = function () {
     }
     if (prevSearch["searchStr"] == search_bar.value &&
         prevSearch["offset"] == offset &&
-        prevSearch["page"] == select_limit.value) {
+        prevSearch["page"] == select_limit.value &&
+        prevSearch["city"] == select_city.value) {
         return;
     }
-    fetch("http://localhost:3000/api/branches?q=" + search_bar.value + "&limit=" + select_limit.value + "&offset=" + offset)
+
+    fetch("http://localhost:3000/api/branches?q=" + search_bar.value + "&limit=" + select_limit.value + "&offset=" + offset + "&city=" + select_city.value)
         .then((res) => res.json())
         .then((data) => {
             if (data["branches"].length == 0) {
@@ -89,16 +91,16 @@ const searchQuery = function () {
                 tableBody.innerHTML = "";
                 prevResult = data["branches"];
                 data["branches"].forEach(branch => {
-                    // if (branch["city"] == select_city.value.toUpperCase()) {
                     insertRow(branch);
-                    // }
                 });
             }
         })
         .catch((err) => console.log(err));
+
     prevSearch["searchStr"] = search_bar.value;
     prevSearch["offset"] = offset;
     prevSearch["page"] = select_limit.value;
+    prevSearch["city"] = select_city.value;
 }
 search_bar.addEventListener('keyup', () => {
     if (prevSearch["searchStr"] == search_bar.value &&
@@ -139,6 +141,14 @@ next_button.addEventListener('click', () => {
 
 
 select_limit.addEventListener('change', () => {
+    offset = 0;
+    lastPage = false;
+    disableBtn(prev_button);
+    enableBtn(next_button);
+    searchQuery();
+});
+
+select_city.addEventListener('change', () => {
     offset = 0;
     lastPage = false;
     disableBtn(prev_button);
