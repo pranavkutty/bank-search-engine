@@ -68,7 +68,7 @@ app.get("/api/branches", async (req, res) => {
 
         offset = limit * offset; //converting offset to postgres offset
         let matches = await pool.query(
-            "SELECT * FROM branches WHERE city ILIKE $4 AND (ifsc ILIKE $1 OR branch ILIKE $1 OR address ILIKE $1 OR city ILIKE $1 OR district ILIKE $1 OR state ILIKE $1) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+            "SELECT * FROM bank_branches WHERE city ILIKE $4 AND (ifsc ILIKE $1 OR branch ILIKE $1 OR address ILIKE $1 OR city ILIKE $1 OR district ILIKE $1 OR state ILIKE $1) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
             ["%" + searchText + "%", limit, offset, city]
         )
         data = matches["rows"];

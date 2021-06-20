@@ -47,7 +47,7 @@ const insertRow = function (branch) {
     tableBody.innerHTML += `
     <tr>
         <td>${branch["ifsc"]}</td>
-        <td>${branch["branch"]}</td>
+        <td>${branch["bank_name"]}</td>
         <td>${branch["address"]}</td>
         <td>${branch["city"]}</td>
         <td>${branch["state"]}</td>
