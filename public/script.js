@@ -11,7 +11,6 @@ const tableBody = document.getElementById("table-body");
 
 let offset = 0;
 let lastPage = false;
-let limit = select_limit.value;
 let prevSearch = {
     "searchStr": search_bar.value,
     "page": select_limit.value,
@@ -79,7 +78,7 @@ const searchQuery = function () {
                 disableBtn(prev_button);
             }
             else {
-                if (data["branches"].length < limit) {
+                if (data["branches"].length < select_limit.value) {
                     lastPage = true;
                     disableBtn(next_button);
                 }
@@ -101,7 +100,18 @@ const searchQuery = function () {
     prevSearch["offset"] = offset;
     prevSearch["page"] = select_limit.value;
 }
-search_bar.addEventListener('keyup', searchQuery);
+search_bar.addEventListener('keyup', () => {
+    if (prevSearch["searchStr"] == search_bar.value &&
+        prevSearch["offset"] == offset &&
+        prevSearch["page"] == select_limit.value) {
+        return;
+    }
+    offset = 0;
+    lastPage = false;
+    disableBtn(prev_button);
+    enableBtn(next_button);
+    searchQuery();
+});
 
 // prev offset
 prev_button.addEventListener('click', () => {
@@ -112,6 +122,7 @@ prev_button.addEventListener('click', () => {
         disableBtn(prev_button);
     }
     enableBtn(next_button);
+    lastPage = false;
     offset--;
     searchQuery();
 });
@@ -123,5 +134,14 @@ next_button.addEventListener('click', () => {
     }
     enableBtn(prev_button);
     offset++;
+    searchQuery();
+});
+
+
+select_limit.addEventListener('change', () => {
+    offset = 0;
+    lastPage = false;
+    disableBtn(prev_button);
+    enableBtn(next_button);
     searchQuery();
 });
