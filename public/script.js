@@ -44,8 +44,51 @@ if (offset == 0) {
     disableBtn(prev_button);
 }
 
+let checkBranchLocalStorage = function (data) {
+    result = false;
+    let currCityData = JSON.parse(localStorage.getItem(data["city"]));
+    if (currCityData == null) return false;
+    currCityData.forEach((branch) => {
+        if (branch["ifsc"] == data["ifsc"]) {
+            result = true;
+            return;
+        }
+    })
+    return result;
+}
+
+let addBranchLocalStorage = function (data) {
+    let currCityData = JSON.parse(localStorage.getItem(data["city"]));
+    if (currCityData == null)
+        currCityData = [];
+    currCityData.push(data);
+    localStorage.setItem(data["city"], JSON.stringify(currCityData));
+}
+
+let deleteBranchLocalStorage = function (data) {
+    let currCityData = JSON.parse(localStorage.getItem(data["city"]));
+    currCityData.forEach((branch, index) => {
+        if (branch["ifsc"] == data["ifsc"])
+            currCityData.splice(index, 1);
+    })
+    localStorage.setItem(data["city"], JSON.stringify(currCityData));
+}
+
+
 addFav = function (node) {
-    console.log(JSON.parse(decodeURIComponent(node.dataset.bankDetails)));
+    branchDetails = JSON.parse(decodeURIComponent(node.dataset.bankDetails));
+    addBranchLocalStorage(branchDetails);
+    node.src = "images/fav.png";
+    node.onclick = "deleteFav(this)";
+    node.alt = "fav-icon";
+}
+
+deleteFav = function (node) {
+    branchDetails = JSON.parse(decodeURIComponent(node.dataset.bankDetails));
+    deleteBranchLocalStorage(branchDetails);
+    node.src = "images/unfav.png";
+    node.onclick = "addFav(this)";
+    node.alt = "unfav-icon";
 }
 
 const insertRow = function (branch) {
@@ -57,7 +100,7 @@ const insertRow = function (branch) {
         <td>${branch["address"]}</td>
         <td>${branch["city"]}</td>
         <td>${branch["state"]}</td>
-        <td><img class="fav" src="images/unfav.png" alt="fav-icon" data-bank-details=${branchStr} onclick="addFav(this)"></td>
+        ${checkBranchLocalStorage(branch) ? `<td><img class="fav" src="images/fav.png" alt="fav-icon" data-bank-details=${branchStr} onclick="deleteFav(this)"></td>` : `<td><img class="unfav" src="images/unfav.png" alt="unfav-icon" data-bank-details=${branchStr} onclick="addFav(this)"></td>`}
     </tr>
     `
 }
