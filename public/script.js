@@ -9,6 +9,7 @@ const table = document.getElementById("results");
 const noTable = document.getElementById("no-table");
 const tableBody = document.getElementById("table-body");
 
+
 let offset = 0;
 let lastPage = false;
 let prevSearch = {
@@ -43,7 +44,12 @@ if (offset == 0) {
     disableBtn(prev_button);
 }
 
+addFav = function (node) {
+    console.log(JSON.parse(decodeURIComponent(node.dataset.bankDetails)));
+}
+
 const insertRow = function (branch) {
+    let branchStr = encodeURIComponent(JSON.stringify(branch));
     tableBody.innerHTML += `
     <tr>
         <td>${branch["ifsc"]}</td>
@@ -51,7 +57,7 @@ const insertRow = function (branch) {
         <td>${branch["address"]}</td>
         <td>${branch["city"]}</td>
         <td>${branch["state"]}</td>
-        <td><img src="images/unfav.png" alt="fav-icon"></td>
+        <td><img class="fav" src="images/unfav.png" alt="fav-icon" data-bank-details=${branchStr} onclick="addFav(this)"></td>
     </tr>
     `
 }
@@ -155,3 +161,4 @@ select_city.addEventListener('change', () => {
     enableBtn(next_button);
     searchQuery();
 });
+
