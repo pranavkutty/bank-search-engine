@@ -74,6 +74,13 @@ hr#top{
     overflow-x:auto;
 }
 
+#fav-heading{
+    margin-top: 3vh;
+    text-align: center;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+}
+
 #results{
     table-layout: fixed;
     margin-top: 3vh;
@@ -127,6 +134,7 @@ td{
     padding-top: 1vh;
     padding-bottom: 1vh;
 }
+
 #no-table{
     margin-top: 20vh;
     text-align: center;

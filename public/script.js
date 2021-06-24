@@ -8,7 +8,7 @@ const select_limit = document.getElementById("page-limit");
 const table = document.getElementById("results");
 const noTable = document.getElementById("no-table");
 const tableBody = document.getElementById("table-body");
-
+const favHeading = document.getElementById("fav-heading");
 
 let offset = 0;
 let lastPage = false;
@@ -79,7 +79,7 @@ addFav = function (node) {
     branchDetails = JSON.parse(decodeURIComponent(node.dataset.bankDetails));
     addBranchLocalStorage(branchDetails);
     node.src = "images/fav.png";
-    node.onclick = "deleteFav(this)";
+    node.setAttribute("onclick", "deleteFav(this)")
     node.alt = "fav-icon";
 }
 
@@ -87,7 +87,7 @@ deleteFav = function (node) {
     branchDetails = JSON.parse(decodeURIComponent(node.dataset.bankDetails));
     deleteBranchLocalStorage(branchDetails);
     node.src = "images/unfav.png";
-    node.onclick = "addFav(this)";
+    node.setAttribute("onclick", "addFav(this)")
     node.alt = "unfav-icon";
 }
 
@@ -105,12 +105,34 @@ const insertRow = function (branch) {
     `
 }
 
+const showFavs = function () {
+    tableBody.innerHTML = "";
+    let flag = false;
+    favHeading.style.display = "block";
+    Object.keys(localStorage).forEach((city) => {
+        let data = JSON.parse(localStorage[city]);
+        if (data.length > 0) {
+            flag = true;
+            enableTable();
+            data.forEach((branch) => {
+                insertRow(branch);
+            })
+        }
+    });
+    if (!flag) {
+        disableTable();
+    }
+}
+
+showFavs();
+
 const searchQuery = function () {
     if (search_bar.value == "") {
         prevSearch["searchStr"] = "";
         disableTable();
         disableBtn(next_button);
         disableBtn(prev_button);
+        showFavs();
         return;
     }
     if (prevSearch["searchStr"] == search_bar.value &&
@@ -119,7 +141,7 @@ const searchQuery = function () {
         prevSearch["city"] == select_city.value) {
         return;
     }
-
+    favHeading.style.display = "none";
     fetch("http://localhost:3000/api/branches?q=" + search_bar.value + "&limit=" + select_limit.value + "&offset=" + offset + "&city=" + select_city.value)
         .then((res) => res.json())
         .then((data) => {
@@ -193,7 +215,7 @@ select_limit.addEventListener('change', () => {
     offset = 0;
     lastPage = false;
     disableBtn(prev_button);
-    enableBtn(next_button);
+    // enableBtn(next_button);
     searchQuery();
 });
 
