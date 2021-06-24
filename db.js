@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ silent: true });;
 const Pool = require("pg").Pool;
 
 const pool = new Pool({
