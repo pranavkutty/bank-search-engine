@@ -75,6 +75,7 @@ hr#top{
 }
 
 #fav-heading{
+    font-size: 2.5vmin;
     margin-top: 3vh;
     text-align: center;
     text-decoration-line: underline;
@@ -136,6 +137,7 @@ td{
 }
 
 #no-table{
+    font-size: 2.5vmin;
     margin-top: 20vh;
     text-align: center;
 }
