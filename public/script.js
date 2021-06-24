@@ -142,7 +142,7 @@ const searchQuery = function () {
         return;
     }
     favHeading.style.display = "none";
-    fetch("http://localhost:3000/api/branches?q=" + search_bar.value + "&limit=" + select_limit.value + "&offset=" + offset + "&city=" + select_city.value)
+    fetch("/api/branches?q=" + search_bar.value + "&limit=" + select_limit.value + "&offset=" + offset + "&city=" + select_city.value)
         .then((res) => res.json())
         .then((data) => {
             if (data["branches"].length == 0) {
