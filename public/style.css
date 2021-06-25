@@ -83,7 +83,8 @@ hr#top{
 }
 
 #results{
-    table-layout: fixed;
+    table-layout: auto;
+    width: auto;
     margin-top: 3vh;
     border-collapse: separate;
     border-spacing: 0 1vh;
@@ -113,6 +114,10 @@ th:first-child ,td:first-child {
 th:last-child ,td:last-child {
     border-bottom-right-radius: 10px; 
     border-top-right-radius: 10px; 
+}
+
+td:last-child{
+    text-align: right;
 }
 
 td:last-child img{

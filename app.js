@@ -68,17 +68,11 @@ app.get("/api/branches", async (req, res) => {
 
         offset = limit * offset; //converting offset to postgres offset
         let matches = await pool.query(
-            "SELECT * FROM bank_branches WHERE city ILIKE $4 AND (ifsc ILIKE $1 OR branch ILIKE $1 OR address ILIKE $1 OR city ILIKE $1 OR district ILIKE $1 OR state ILIKE $1) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
+            "SELECT * FROM bank_branches WHERE city ILIKE $4 AND (ifsc ILIKE $1 OR branch ILIKE $1 OR address ILIKE $1 OR city ILIKE $1 OR district ILIKE $1 OR state ILIKE $1 OR bank_name ILIKE $1) ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
             ["%" + searchText + "%", limit, offset, city]
         )
         data = matches["rows"];
-        // console.log(typeof (data));
-        // if (typeof BigInt(searchText) === 'bigint') {
-        //     matches = await pool.query(
-        //         "SELECT * from branches WHERE bank_id::varchar(255) LIKE $1 ORDER BY ifsc ASC LIMIT $2 OFFSET $3",
-        //         ['110', limit, offset]
-        //     )
-        // }
+
         res.json({ "branches": data });
     }
     catch (err) {

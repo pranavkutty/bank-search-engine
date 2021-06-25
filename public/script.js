@@ -31,7 +31,7 @@ const enableBtn = function (btn) {
 }
 
 const enableTable = function () {
-    table.style.display = "block";
+    table.style.display = "table";
     noTable.style.display = "none";
 }
 
